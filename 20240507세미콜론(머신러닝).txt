@@ -1,4 +1,4 @@
-20240507 동아리 수업내용 머신러닝
+아이리스꽃분석(0507동아리수업내용)
 
 import pandas as pd
 from sklearn.datasets import load_iris
