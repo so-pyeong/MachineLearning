@@ -1,4 +1,4 @@
-머신러닝_20240514 유방암데이터분석
+0514유방암데이터분석
 
 import matplotlib.pyplot as plt
 from sklearn.datasets import  load_breast_cancer
