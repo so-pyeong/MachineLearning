@@ -1,0 +1,51 @@
+머신러닝_20240514 유방암데이터분석
+
+import matplotlib.pyplot as plt
+from sklearn.datasets import  load_breast_cancer
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import classification_report
+from sklearn.ensemble import RandomForestClassifier
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plt
+
+data=load_breast_cancer()
+
+breast_cancer_data=data.data
+breast_cancer_feature=data.feature_names
+breast_cancer_target=data.target
+print(breast_cancer_target)
+
+df=pd.DataFrame(data=breast_cancer_data,columns=breast_cancer_feature)
+df['target']=breast_cancer_target
+print(df)
+
+columns=['mean radius','mean texture','mean perimeter','mean area',
+         'mean smoothness','mean compactness','mean concavity','mean concave points',
+         'mean symmetry','mean fractal dimension','target']
+columns_df=df[columns]
+
+mal=columns_df[columns_df['target']==0]  #0이 악성
+ben=columns_df[columns_df['target']==1]  #1이 양성
+
+fig=plt.figure(figsize=(12,12))
+ax=fig.gca()
+sns.heatmap(mal.corr(),annot=True,ax=ax)
+plt.show()
+
+# plt.scatter('mean compactness','mean concavity',data=mal,alpha=0.5,color='darkred',label='mal')
+# plt.scatter('mean compactness','mean concavity',data=ben,alpha=0.5,color='gray',label='ben')
+# plt.legend()
+# plt.xlabel("compactness")
+# plt.ylabel("concavity")
+# plt.show()
+
+X_train,x_test,y_train,y_test=train_test_split(breast_cancer_data,breast_cancer_target,
+                                               test_size=0.2,random_state=1234)
+model=DecisionTreeClassifier(random_state=1234)
+model.fit(X_train,y_train)
+
+pred=model.predict(x_test)
+print(classification_report(y_test,pred))

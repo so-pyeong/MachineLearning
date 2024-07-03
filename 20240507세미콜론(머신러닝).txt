@@ -1,0 +1,69 @@
+20240507 동아리 수업내용 머신러닝
+
+import pandas as pd
+from sklearn.datasets import load_iris
+import numpy as np
+
+iris=load_iris()
+print(type(iris))
+
+print(iris.keys())
+
+x=iris['data']
+print(type(x),x.shape)
+
+df=pd.DataFrame(iris['data'],columns=iris['feature_names'])
+print(df)
+
+df['target']=iris['target']
+print(df)
+
+df['class_name']=df['target'].apply(lambda idx : iris['target_names'][idx])
+print(df)
+
+
+20240507_1
+
+import numpy as np
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.datasets import load_iris
+import numpy as up
+
+iris=load_iris()
+
+x=iris['data']
+y=iris['target']
+
+clf=DecisionTreeClassifier()
+
+clf.fit(x,y) #학습시키기
+df=pd.DataFrame(iris['data'],columns=iris['feature_names'])  #데이터 정렬
+print(df)
+new_data=np.array([[5,3.5,1.4,0.25]])
+print(new_data.shape)
+
+pred=clf.predict(new_data) #예측하기
+print(pred)
+
+
+
+20240507_2
+
+iris=load_iris()
+#df=pd.DataFrame(iris['data'],columns=iris['feature_names'])
+x,y=iris.data,iris.target
+
+#평가할 데이터 나누기(100개 중 20개만 넣기, 여러번 돌려도 random_state(정확도)로 고정해줌
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,shuffle=True,random_state=1234,stratify=y)
+
+clf=DecisionTreeClassifier()
+
+clf.fit(x_train,y_train)
+
+pred=clf.predict(x_test) #학습시킨 데이터 모델 평가, 검증
+print(pred)
+
+print(y_test) #수치화해서 보여줌
+
+print(accuracy_score(y_test,pred))
